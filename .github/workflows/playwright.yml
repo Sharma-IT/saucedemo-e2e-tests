@@ -92,10 +92,19 @@ jobs:
     steps:
       - name: Download all artifacts
         uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+      
+      - name: Display structure of downloaded files
+        run: ls -R artifacts
       
       - name: Merge test reports
         run: |
-          find . -name "junit.xml" -exec cat {} \; > merged-junit.xml
+          echo '<?xml version="1.0" encoding="UTF-8"?>' > merged-junit.xml
+          echo '<testsuites>' >> merged-junit.xml
+          find artifacts -name "junit.xml" -exec sh -c 'sed -n "/<testsuite/,/<\/testsuite>/p" "$1"' sh {} \; >> merged-junit.xml
+          echo '</testsuites>' >> merged-junit.xml
+          cat merged-junit.xml
       
       - name: Publish Combined Test Report
         uses: mikepenz/action-junit-report@v3
