@@ -12,6 +12,8 @@ End-to-end test suite for the Saucedemo website using Playwright and TypeScript.
 - Automatic retries for flaky tests
 - Screenshot and video capture on test failure
 - Trace viewer support for debugging
+- State management with authentication persistence
+- Parallel test execution with sharding
 
 ## Project Structure
 
@@ -20,9 +22,12 @@ saucedemo-e2e-tests/
 ├── tests/                # Test files
 ├── pages/                # Page Object Models
 ├── fixtures/             # Test fixtures and data
-├── test-results/         # Test execution results
+│   ├── page-fixtures.ts  # Page object fixtures
+│   ├── test-base.ts      # Base test configuration
+│   └── test-data.ts      # Test data constants
 ├── playwright.config.ts  # Playwright configuration
 ├── global-setup.ts       # Global test setup
+├── global-teardown.ts    # Global test teardown
 └── docs/                 # Documentation files
     ├── assumptions.md    # Detailed assumptions
     └── license.md        # Project license information
@@ -79,6 +84,26 @@ npm run test:report
 - Cart functionality
   - Adding/removing items
   - Cart badge updates
+
+## Configuration
+
+The test suite is configured with:
+
+- Base URL: https://www.saucedemo.com
+- Browser support:
+  - Desktop: Chrome, Firefox, Safari
+  - Mobile: Pixel 5, iPhone 12
+- Test retries: 2 attempts
+- Timeouts:
+  - Global: 30 seconds
+  - Action: 15 seconds
+  - Navigation: 15 seconds
+- Test artifacts:
+  - Screenshots on failure
+  - Videos on failure
+  - Trace viewer support
+- Authentication state persistence
+- Parallel execution with test sharding
 
 ## CI/CD Integration
 

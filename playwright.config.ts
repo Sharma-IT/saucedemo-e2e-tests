@@ -1,4 +1,7 @@
 import { PlaywrightTestConfig, devices } from '@playwright/test';
+import path from 'path';
+
+const baseURL = 'https://www.saucedemo.com';
 
 const config: PlaywrightTestConfig = {
   testDir: './tests',
@@ -10,15 +13,18 @@ const config: PlaywrightTestConfig = {
     ['list'],
     ['junit', { outputFile: 'test-results/junit.xml' }]
   ],
+  globalSetup: require.resolve('./global-setup'),
+  globalTeardown: require.resolve('./global-teardown'),
   use: {
-    baseURL: 'https://www.saucedemo.com',
+    baseURL,
     headless: true,
     viewport: { width: 1280, height: 720 },
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     trace: 'retain-on-failure',
     actionTimeout: 15000,
-    navigationTimeout: 15000
+    navigationTimeout: 15000,
+    storageState: path.join(process.cwd(), 'test-results', 'auth.json')
   },
   projects: [
     {
@@ -44,10 +50,9 @@ const config: PlaywrightTestConfig = {
   ],
   outputDir: 'test-results/',
   forbidOnly: !!process.env.CI,
-  globalSetup: require.resolve('./global-setup'),
   webServer: {
     command: 'npm run start',
-    url: 'https://www.saucedemo.com',
+    url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000
   }

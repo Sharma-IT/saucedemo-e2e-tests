@@ -1,15 +1,9 @@
 import { test as base } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
 import { InventoryPage } from '../pages/inventory.page';
+import { TestFixtures } from './page-fixtures';
 
-// Declare the types of fixtures
-type MyFixtures = {
-    loginPage: LoginPage;
-    inventoryPage: InventoryPage;
-};
-
-// Extend the base test with fixtures
-export const test = base.extend<MyFixtures>({
+export const test = base.extend<TestFixtures>({
     loginPage: async ({ page }, use) => {
         await use(new LoginPage(page));
     },
