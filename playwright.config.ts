@@ -49,13 +49,7 @@ const config: PlaywrightTestConfig = {
     }
   ],
   outputDir: 'test-results/',
-  forbidOnly: !!process.env.CI,
-  webServer: {
-    command: 'npm run start',
-    url: baseURL,
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000
-  }
+  forbidOnly: !!process.env.CI
 };
 
 export default config;
