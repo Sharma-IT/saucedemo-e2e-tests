@@ -5,6 +5,7 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+
 permissions:
   checks: write
   pull-requests: write
@@ -68,7 +69,7 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v3
       with:
-        name: test-results-shard-${{ matrix.shard }}
+        name: test-results-${{ matrix.shard }}
         path: |
           test-results/
           playwright-report/
@@ -81,5 +82,33 @@ jobs:
       with:
         report_paths: 'test-results/junit.xml'
         detailed_summary: true
-        include_passed: true
-        check_name: 'Test Report - Shard ${{ matrix.shard }}'
+        include_passed: false
+        check_name: 'Shard ${{ matrix.shard }} Tests'
+
+  merge-reports:
+    name: 'Merge Test Reports'
+    needs: test
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+      
+      - name: Install merge tool
+        run: |
+          npm init -y
+          npm install -g junit-report-merger
+      
+      - name: Merge reports
+        run: |
+          jrm merged-report.xml "artifacts/test-results-*/junit.xml"
+      
+      - name: Publish Combined Report
+        uses: mikepenz/action-junit-report@v3
+        with:
+          report_paths: merged-report.xml
+          detailed_summary: true
+          include_passed: true
+          check_name: 'All Tests Summary'
