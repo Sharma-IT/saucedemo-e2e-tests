@@ -84,31 +84,3 @@ jobs:
         detailed_summary: true
         include_passed: false
         check_name: 'Shard ${{ matrix.shard }} Tests'
-
-  merge-reports:
-    name: 'Merge Test Reports'
-    needs: test
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
-        with:
-          path: artifacts
-      
-      - name: Install merge tool
-        run: |
-          npm init -y
-          npm install -g junit-report-merger
-      
-      - name: Merge reports
-        run: |
-          jrm merged-report.xml "artifacts/test-results-*/junit.xml"
-      
-      - name: Publish Combined Report
-        uses: mikepenz/action-junit-report@v3
-        with:
-          report_paths: merged-report.xml
-          detailed_summary: true
-          include_passed: true
-          check_name: 'All Tests Summary'
