@@ -108,24 +108,21 @@ The test suite is configured with:
 ## CI/CD Integration
 
 The test suite is configured for CI/CD environments with:
-- Runs on Node.js 20
-- Parallel test execution with sharding (3 shards)
-- Fail-fast disabled to complete all test runs
-- Automatic retry mechanism (2 retries)
-- Comprehensive reporting:
-  - HTML report generation
-  - JUnit XML report output
-  - Detailed test summary
-- Artifact collection:
-  - Test results
-  - Playwright reports
-  - Screenshots on failure
-  - Videos on failure
-  - Trace files on failure
-- No focus mode in CI (forbidOnly)
-- Caching for:
-  - npm dependencies
-  - Playwright browser installations
+- Runs on Node.js 20 on Ubuntu latest
+- Parallel test execution:
+  - 3-way sharding for optimal distribution
+  - Fail-fast disabled for complete test visibility
+  - Current distribution: 6/6/3 tests per shard
+- Test reporting per shard:
+  - JUnit XML reports with passed test inclusion
+  - Detailed test summaries
+  - Individual shard test reports
+- Development safeguards:
+  - No focus mode in CI (forbidOnly)
+  - Automatic retries (2 attempts)
+- Performance optimisations:
+  - npm dependency caching
+  - Playwright browser caching
 
 ## Assumptions and Documentation
 
