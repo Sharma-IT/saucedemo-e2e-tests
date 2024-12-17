@@ -73,28 +73,3 @@ jobs:
         path: |
           playwright-report/
         retention-days: 30
-  
-  combine_reports:
-      name: Combine Reports
-      needs: test  # Ensure all test shards finish before combining
-      runs-on: ubuntu-latest
-      steps:
-        - name: Download all test artifacts
-          uses: actions/download-artifact@v3
-          with:
-            path: test-artifacts
-        
-        - name: Combine HTML Reports
-          id: combine-reports
-          run: |
-             mkdir combined-report
-             find test-artifacts -name "playwright-report" -print0 | while IFS= read -r -d $'\0' file; do
-               cp -r "$file/" combined-report/
-             done
-
-        - name: Upload Combined Report
-          uses: actions/upload-artifact@v3
-          with:
-            name: combined-test-report
-            path: combined-report
-            retention-days: 30
