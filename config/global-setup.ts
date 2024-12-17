@@ -1,6 +1,6 @@
 import { chromium, FullConfig } from '@playwright/test';
-import { LoginPage } from './pages/login.page';
-import { TEST_USERS } from './fixtures/test-data';
+import { LoginPage } from '../pages/login.page';
+import { TEST_USERS } from '../fixtures/test-data';
 import fs from 'fs';
 import path from 'path';
 

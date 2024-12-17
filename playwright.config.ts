@@ -13,8 +13,8 @@ const config: PlaywrightTestConfig = {
     ['list'],
     ['junit', { outputFile: 'test-results/junit.xml' }]
   ],
-  globalSetup: require.resolve('./global-setup'),
-  globalTeardown: require.resolve('./global-teardown'),
+  globalSetup: require.resolve('./config/global-setup'),
+  globalTeardown: require.resolve('./config/global-teardown'),
   use: {
     baseURL,
     headless: true,

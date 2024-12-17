@@ -19,18 +19,23 @@ End-to-end test suite for the Saucedemo website using Playwright and TypeScript.
 
 ```
 saucedemo-e2e-tests/
-├── tests/                # Test files
-├── pages/                # Page Object Models
-├── fixtures/             # Test fixtures and data
-│   ├── page-fixtures.ts  # Page object fixtures
-│   ├── test-base.ts      # Base test configuration
-│   └── test-data.ts      # Test data constants
-├── playwright.config.ts  # Playwright configuration
-├── global-setup.ts       # Global test setup
-├── global-teardown.ts    # Global test teardown
-└── docs/                 # Documentation files
-    ├── assumptions.md    # Detailed assumptions
-    └── license.md        # Project license information
+├── tests/                       # Test files
+│   └── purchase-flow.spec.ts    # E2E tests for purchase flow
+├── pages/                       # Page Object Models
+│   ├── login.page.ts            # Login page interactions
+│   ├── inventory.page.ts        # Inventory page interactions
+│   └── checkout.page.ts         # Checkout page interactions
+├── fixtures/                    # Test fixtures and data
+│   ├── test-base.ts             # Base test configuration and fixtures
+│   └── test-data.ts             # Test data constants
+├── config/                      # Configuration files
+│   ├── global-setup.ts          # Global test setup
+│   └── global-teardown.ts       # Global test teardown
+├── playwright.config.ts         # Playwright configuration
+├── README.md                    # Project documentation
+└── docs/                        # Documentation files
+    ├── assumptions.md           # Detailed assumptions
+    └── license.md               # Project license information
 ```
 
 ## Getting Started

@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class LoginPage {
     readonly page: Page;
@@ -25,5 +25,15 @@ export class LoginPage {
         await this.passwordInput.fill(password);
         await this.loginButton.click();
         await this.page.waitForURL(/inventory.html/);
+    }
+
+    async verifyLockedOutUser(username: string, password: string) {
+        await this.goto();
+        await this.usernameInput.fill(username);
+        await this.passwordInput.fill(password);
+        await this.loginButton.click();
+        
+        await expect(this.errorMessage).toBeVisible();
+        await expect(this.errorMessage).toContainText('Epic sadface: Sorry, this user has been locked out');
     }
 }

@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class InventoryPage {
     readonly page: Page;
@@ -14,9 +14,11 @@ export class InventoryPage {
     }
 
     async addProductToCart(productId: string) {
+        await this.inventoryContainer.waitFor();
         const addButton = this.page.locator(`[data-test="add-to-cart-${productId}"]`);
         await addButton.waitFor({ state: 'visible' });
         await addButton.click();
+        await expect(this.cartBadge).toHaveText('1');
     }
 
     async getProductPrice(productId: string): Promise<string> {
@@ -27,5 +29,10 @@ export class InventoryPage {
     async goToCart() {
         await this.cartLink.click();
         await this.page.waitForURL(/cart.html/);
+    }
+
+    async removeProductFromCart(productId: string) {
+        await this.page.click(`[data-test="remove-${productId}"]`);
+        await expect(this.cartBadge).toHaveCount(0);
     }
 }
