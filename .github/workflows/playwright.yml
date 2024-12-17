@@ -63,7 +63,7 @@ jobs:
           ${{ runner.os }}-playwright-
     
     - name: Run Playwright tests
-      run: npx playwright test --shard ${{ matrix.shard }}/3 --reporter=html
+      run: npx playwright test --shard ${{ matrix.shard }}/3
     
     - name: Upload test results
       if: always()
@@ -71,5 +71,14 @@ jobs:
       with:
         name: test-results-${{ matrix.shard }}
         path: |
+          test-results/
           playwright-report/
+          junit.xml
         retention-days: 30
+    
+    - name: Publish Test Report
+      if: always()
+      uses: mikepenz/action-junit-report@v3
+      with:
+        report_paths: 'test-results/junit.xml'
+        check_name: 'Shard ${{ matrix.shard }} Tests'
