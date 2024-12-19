@@ -1,5 +1,9 @@
 import { PlaywrightTestConfig, devices } from '@playwright/test';
 import path from 'path';
+import * as dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
 
 const baseURL = 'https://www.saucedemo.com';
 

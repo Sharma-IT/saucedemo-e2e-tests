@@ -90,6 +90,33 @@ npm run test:report
   - Adding/removing items
   - Cart badge updates
 
+## Test Users and Environment Variables
+
+This project demonstrates environment variable usage for test credentials, although for this demo site (saucedemo.com), the credentials are publicly available:
+
+```
+Standard User:
+- Username: standard_user
+- Password: secret_sauce
+
+Locked Out User:
+- Username: locked_out_user
+- Password: secret_sauce
+```
+
+The project uses `.env` files and GitHub Secrets to showcase best practices for credential management:
+
+1. Local Development:
+   - Copy `.env.example` to `.env`
+   - Add the above credentials to your `.env` file
+   - `.env` is gitignored to demonstrate secure credential handling
+
+2. CI/CD:
+   - GitHub Secrets are used to demonstrate secure credential storage
+   - Secrets are injected as environment variables during test runs
+
+Note: While we're using environment variables and secrets in this project, it's purely for demonstration purposes since these are public test credentials. In a real project, you would use this same pattern to secure actual sensitive credentials.
+
 ## Configuration
 
 The test suite is configured with:

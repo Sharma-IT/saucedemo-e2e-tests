@@ -13,4 +13,9 @@ Thumbs.db
 
 # npm files
 .npm
-npm-debug.log*  
+npm-debug.log*
+
+# Environment variables
+.env
+.env.*
+!.env.example

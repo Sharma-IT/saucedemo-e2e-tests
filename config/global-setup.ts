@@ -1,8 +1,12 @@
 import { chromium, FullConfig } from '@playwright/test';
+import * as dotenv from 'dotenv';
 import { LoginPage } from '../pages/login.page';
 import { TEST_USERS } from '../fixtures/test-data';
 import fs from 'fs';
 import path from 'path';
+
+// Load environment variables from .env file
+dotenv.config();
 
 async function globalSetup(config: FullConfig) {
     // Ensure test results directory exists
