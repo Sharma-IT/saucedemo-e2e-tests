@@ -4,11 +4,25 @@ import { LoginPage } from '../pages/login.page';
 import { TEST_USERS } from '../fixtures/test-data';
 import fs from 'fs';
 import path from 'path';
+import { TestState } from './test-state';
 
 // Load environment variables from .env file
 dotenv.config();
 
+// Initialise test state
+TestState.getInstance().reset();
+
 async function globalSetup(config: FullConfig) {
+    const baseURL = 'https://www.saucedemo.com';
+
+    // Print test configuration
+    console.log('Test Configuration:\n');
+    console.log('Environment:', process.env.NODE_ENV || 'development');
+    console.log('Workers:', config.workers);
+    console.log('Base URL:', baseURL);
+    console.log('Test Run Started:', new Date().toLocaleString());
+    console.log('-'.repeat(41));
+
     // Ensure test results directory exists
     const testResultsDir = path.join(process.cwd(), 'test-results');
     if (!fs.existsSync(testResultsDir)) {
@@ -18,23 +32,14 @@ async function globalSetup(config: FullConfig) {
     // Setup authentication state
     const browser = await chromium.launch();
     const context = await browser.newContext({
-        baseURL: 'https://www.saucedemo.com'
+        baseURL: baseURL
     });
     const page = await context.newPage();
-
-    // Login and save authentication state
     const loginPage = new LoginPage(page);
     await loginPage.goto();
     await loginPage.login(TEST_USERS.STANDARD.username, TEST_USERS.STANDARD.password);
-    
-    // Store authentication state for reuse
-    await context.storageState({
-        path: path.join(testResultsDir, 'auth.json')
-    });
-
+    await context.storageState({ path: path.join(testResultsDir, 'auth.json') });
     await browser.close();
-
-    console.log('Global setup completed successfully');
 }
 
 export default globalSetup;
