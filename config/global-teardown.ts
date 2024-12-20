@@ -15,7 +15,7 @@ async function globalTeardown(config: FullConfig) {
         fs.rmSync(testDataDir, { recursive: true, force: true });
     }
 
-    console.log('Global teardown completed successfully');
+    console.log('\nGlobal teardown completed successfully');
 }
 
 export default globalTeardown;
