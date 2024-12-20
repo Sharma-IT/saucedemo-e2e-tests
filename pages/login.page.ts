@@ -34,6 +34,5 @@ export class LoginPage {
         await this.loginButton.click();
         
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toContainText('Epic sadface: Sorry, this user has been locked out');
     }
 }

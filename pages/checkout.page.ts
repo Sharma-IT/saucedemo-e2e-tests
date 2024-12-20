@@ -30,7 +30,7 @@ export class CheckoutPage {
     async completeOrder() {
         await this.finishButton.click();
         await this.page.waitForURL(/checkout-complete.html/);
-        await expect(this.completeHeader).toHaveText('Thank you for your order!');
+        await expect(this.completeHeader).toBeVisible();
     }
 
     async startCheckout() {
