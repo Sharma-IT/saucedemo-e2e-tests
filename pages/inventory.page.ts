@@ -9,10 +9,12 @@ export class InventoryPage {
     constructor(page: Page) {
         this.page = page;
         this.inventoryContainer = page.locator('[data-test="inventory-container"]');
-        this.cartBadge = page.locator('.shopping_cart_badge');
-        this.cartLink = page.locator('.shopping_cart_link');
+        this.cartBadge = page.locator('[data-test="shopping-cart-badge"]');
+        this.cartLink = page.locator('[data-test="shopping-cart-link"]');
     }
 
+    // Note: addButton and priceElement locators are created within methods rather than constructor
+    // because they depend on dynamic productId values that are only available at runtime
     async addProductToCart(productId: string) {
         await this.inventoryContainer.waitFor();
         const addButton = this.page.locator(`[data-test="add-to-cart-${productId}"]`);
