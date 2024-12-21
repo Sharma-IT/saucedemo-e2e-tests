@@ -4,13 +4,9 @@ import { LoginPage } from '../page_objects/login.page';
 import { TEST_USERS } from '../fixtures/test-data';
 import fs from 'fs';
 import path from 'path';
-import { TestState } from './test-state';
 
 // Load environment variables from .env file
 dotenv.config();
-
-// Initialise test state
-TestState.getInstance().reset();
 
 async function globalSetup() {
     const baseURL = 'https://www.saucedemo.com';
