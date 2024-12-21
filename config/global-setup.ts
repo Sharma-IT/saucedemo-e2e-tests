@@ -1,6 +1,6 @@
-import { chromium, FullConfig } from '@playwright/test';
+import { chromium } from '@playwright/test';
 import * as dotenv from 'dotenv';
-import { LoginPage } from '../pages/login.page';
+import { LoginPage } from '../page_objects/login.page';
 import { TEST_USERS } from '../fixtures/test-data';
 import fs from 'fs';
 import path from 'path';
@@ -12,13 +12,12 @@ dotenv.config();
 // Initialise test state
 TestState.getInstance().reset();
 
-async function globalSetup(config: FullConfig) {
+async function globalSetup() {
     const baseURL = 'https://www.saucedemo.com';
 
     // Print test configuration
     console.log('Test Configuration:\n');
     console.log('Environment:', process.env.NODE_ENV || 'development');
-    console.log('Workers:', config.workers);
     console.log('Base URL:', baseURL);
     console.log('Test Run Started:', new Date().toLocaleString());
     console.log('-'.repeat(41));

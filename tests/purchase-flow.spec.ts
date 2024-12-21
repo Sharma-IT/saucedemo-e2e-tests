@@ -2,20 +2,23 @@ import { test } from '../fixtures/test-base';
 import { TEST_USERS, PRODUCTS, TEST_USER_INFO } from '../fixtures/test-data';
 
 test.describe('Saucedemo Product Purchase Flow', () => {
-  test.beforeEach(async ({ page, inventoryPage }, testInfo) => {
-    if (testInfo.title !== 'Verify error for locked out user') {
+  test.beforeEach(async ({ page, header, inventoryPage }, testInfo) => {
+    if (testInfo.title !== 'Error handling of locked out user') {
       await page.goto('/inventory.html');
       await inventoryPage.addProductToCart(PRODUCTS.BACKPACK.id);
-      await inventoryPage.goToCart();
+      await header.goToCart();
     }
   });
 
-  test('Complete a successful product purchase', async ({ checkoutPage }) => {
+  test('Product purchase', async ({ header, cartPage, checkoutPage }) => {
     // 1. Navigate to the checkout page
     // 2. Add product to cart
     // 3. Go to the cart page
+    
+    // 4. Verify product in cart
+    await cartPage.verifyProductInCart(PRODUCTS.BACKPACK.name);
 
-    // 4. Complete checkout:
+    // 5. Complete checkout
     await checkoutPage.startCheckout();
     await checkoutPage.fillInformation(
       TEST_USER_INFO.firstName,
@@ -23,22 +26,45 @@ test.describe('Saucedemo Product Purchase Flow', () => {
       TEST_USER_INFO.postalCode
     );
     await checkoutPage.completeOrder();
+
+    // 6. Check cart is empty
+    await header.goToCart();
+    await cartPage.verifyNoProductInCart(PRODUCTS.BACKPACK.name);
   });
 
-  test('Verify cart functionality', async ({ inventoryPage }) => {
+  test('Cart functionality', async ({ cartPage }) => {
     // 1. Navigate to the checkout page
     // 2. Add product to cart
     // 3. Go to the cart page
 
     // 4. Remove product from cart:
-    await inventoryPage.removeProductFromCart(PRODUCTS.BACKPACK.id);
+    await cartPage.removeProductFromCart(PRODUCTS.BACKPACK.id);
   });
 
-  test('Verify error for locked out user', async ({ loginPage }) => {    
+  test('Error handling of locked out user', async ({ loginPage }) => {    
     // 1. Navigate to the login page,
     // 2. Enter locked out user credentials,
     // 3. Click login button,
     // 4. Verify error message:
     await loginPage.verifyLockedOutUser(TEST_USERS.LOCKED.username, TEST_USERS.LOCKED.password);
+  });
+
+  test('Cart state persistence between logged-in and logged-out sessions', async ({ page, loginPage, cartPage }) => {
+    // 1. Navigate to the checkout page
+    // 2. Add product to cart
+    // 3. Go to the cart page
+    
+    // 4. Verify product in cart:
+    await cartPage.verifyProductInCart(PRODUCTS.BACKPACK.name);
+
+    // 5. Log out:
+    await page.click('[id="react-burger-menu-btn"]');
+    await page.click('[data-test="logout-sidebar-link"]');
+
+    // 6. Login again:
+    await loginPage.login(TEST_USERS.STANDARD.username, TEST_USERS.STANDARD.password);
+
+    // 7. Verify product is still in cart:
+    await cartPage.verifyProductInCart(PRODUCTS.BACKPACK.name);
   });
 });

@@ -4,13 +4,11 @@ export class InventoryPage {
     readonly page: Page;
     readonly inventoryContainer: Locator;
     readonly cartBadge: Locator;
-    readonly cartLink: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.inventoryContainer = page.locator('[data-test="inventory-container"]');
         this.cartBadge = page.locator('[data-test="shopping-cart-badge"]');
-        this.cartLink = page.locator('[data-test="shopping-cart-link"]');
     }
 
     // Note: addButton and priceElement locators are created within methods rather than constructor
@@ -26,15 +24,5 @@ export class InventoryPage {
     async getProductPrice(productId: string): Promise<string> {
         const priceElement = this.page.locator(`[data-test="inventory-item"][data-id="${productId}"] .inventory_item_price`);
         return await priceElement.textContent() || '';
-    }
-
-    async goToCart() {
-        await this.cartLink.click();
-        await this.page.waitForURL(/cart.html/);
-    }
-
-    async removeProductFromCart(productId: string) {
-        await this.page.click(`[data-test="remove-${productId}"]`);
-        await expect(this.cartBadge).toHaveCount(0);
     }
 }

@@ -1,12 +1,7 @@
-import { FullConfig } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
-import { TestState } from './test-state';
 
-async function globalTeardown(config: FullConfig) {
-    // Calculate test duration
-    const testEndTime = Date.now();
-    const duration = (testEndTime - TestState.getInstance().getStartTime()) / 1000;
+async function globalTeardown() {
 
     // Get test results directory size
     const testResultsDir = path.join(process.cwd(), 'test-results');
@@ -14,7 +9,6 @@ async function globalTeardown(config: FullConfig) {
     console.log('\nGlobal Teardown:\n');
     console.log('Environment:', process.env.NODE_ENV || 'development');
     console.log('Test Run Ended:', new Date().toLocaleString());
-    console.log('Total Test Duration:', duration.toFixed(2) + 's');
     console.log('-'.repeat(40));
 
     // Clean up authentication state
