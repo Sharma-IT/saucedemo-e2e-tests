@@ -144,7 +144,6 @@ The test suite is configured for CI/CD environments with:
 - Parallel test execution:
   - 3-way sharding for optimal distribution
   - Fail-fast disabled for complete test visibility
-  - Current distribution: 6/6/3 tests per shard
 - Test reporting per shard:
   - JUnit XML reports with passed test inclusion
   - Detailed test summaries
