@@ -49,7 +49,7 @@ test.describe('Saucedemo Product Purchase Flow', () => {
     await loginPage.verifyLockedOutUser(TEST_USERS.LOCKED.username, TEST_USERS.LOCKED.password);
   });
 
-  test('Cart state persistence between logged-in and logged-out sessions', async ({ page, loginPage, cartPage }) => {
+  test('Cart state persistence between logged-in and logged-out sessions', async ({ sidebar, loginPage, cartPage }) => {
     // 1. Navigate to the checkout page
     // 2. Add product to cart
     // 3. Go to the cart page
@@ -58,8 +58,7 @@ test.describe('Saucedemo Product Purchase Flow', () => {
     await cartPage.verifyProductInCart(PRODUCTS.BACKPACK.name);
 
     // 5. Log out:
-    await page.click('[id="react-burger-menu-btn"]');
-    await page.click('[data-test="logout-sidebar-link"]');
+    await sidebar.logout();
 
     // 6. Login again:
     await loginPage.login(TEST_USERS.STANDARD.username, TEST_USERS.STANDARD.password);
