@@ -115,7 +115,7 @@ The project uses `.env` files and GitHub Secrets to showcase best practices for 
    - GitHub Secrets are used to demonstrate secure credential storage
    - Secrets are injected as environment variables during test runs
 
-Note: While we're using environment variables and secrets in this project, it's purely for demonstration purposes since these are public test credentials. In a real project, you would use this same pattern to secure actual sensitive credentials.
+Note: While I'm using environment variables and secrets in this project, it's purely for demonstration purposes since these are public test credentials. In a real project, you would use this same pattern to secure actual sensitive credentials.
 
 ## Configuration
 
