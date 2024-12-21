@@ -155,10 +155,6 @@ The test suite is configured for CI/CD environments with:
   - npm dependency caching
   - Playwright browser caching
 
-## Assumptions and Documentation
-
-For a comprehensive list of assumptions, testing constraints, and project considerations, please refer to the [detailed assumptions document](/docs/assumptions.md).
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
